@@ -1,0 +1,50 @@
+//REDUCER
+const ticketListReducer = (state = {}, action) => {
+  const { names, location, issue, id } = action;
+  switch (action.type){
+    case 'ADD_TICKET':
+      return Object.assign({}, state, {
+        [id]: {
+          names: names, 
+          location: location,
+          issue: issue,
+          id:id
+        }
+      });
+      case 'DELETE_TICKET':
+        const newState = {...state};
+        delete newState[id];
+        return newState:
+      default:
+        return state;
+  }
+};
+// REDUX STORE
+
+const {createStore} = Redux;
+const store = createStore(ticketListReducer);
+console.log(store.getState());
+const unsubscribe = store.subscribe(() => console.log(store.getState()));
+
+store.dispatch ({
+  type: 'ADD_TICKET',
+  names: 'Jasmine and Justine',
+  location: '2a',
+  issue: 'reducer not working',
+  id: 1
+});
+
+store.dispatch({
+  type: 'ADD_TICKET', 
+  names: 'Brannnnnn and rose',
+  location: '3b',
+  issue: 'Probs understanding',
+  id: 2
+});
+
+store.dispatch({
+  type: 'DELETE_TICKET',
+  id: 1
+});
+
+unsubscribe();
